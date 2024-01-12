@@ -1,0 +1,6 @@
+﻿if optimizer_type == "AdamW":
+            self.optimizer_type = AdamW
+        elif optimizer_type == "Adam":
+            self.optimizer_type = Adam
+        else:
+            raise ValueError("optimizer_type must be either AdamW or Adam")

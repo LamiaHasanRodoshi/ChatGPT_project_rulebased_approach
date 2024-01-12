@@ -1,0 +1,51 @@
+﻿super().__init__()
+        self.save_hyperparameters()
+        self.encoder = MarlinEncoder(
+            img_size=img_size,
+            patch_size=patch_size,
+            n_frames=n_frames,
+            embed_dim=encoder_embed_dim,
+            depth=encoder_depth,
+            num_heads=encoder_num_heads,
+            mlp_ratio=mlp_ratio,
+            qkv_bias=qkv_bias,
+            qk_scale=qk_scale,
+            drop_rate=drop_rate,
+            attn_drop_rate=attn_drop_rate,
+            norm_layer=norm_layer,
+            init_values=init_values,
+            tubelet_size=tubelet_size
+        )
+
+
+        self.decoder = MarlinDecoder(
+            img_size=img_size,
+            patch_size=patch_size,
+            embed_dim=decoder_embed_dim,
+            depth=decoder_depth,
+            num_heads=decoder_num_heads,
+            mlp_ratio=mlp_ratio,
+            qkv_bias=qkv_bias,
+            qk_scale=qk_scale,
+            drop_rate=drop_rate,
+            attn_drop_rate=attn_drop_rate,
+            norm_layer=norm_layer,
+            init_values=init_values,
+            tubelet_size=tubelet_size
+        )
+
+
+        self.discriminator = MLP([patch_size * patch_size * 3 * tubelet_size, int(decoder_embed_dim * mlp_ratio), 1],
+                                 build_activation=LeakyReLU)
+
+
+        self.tubelet_size = tubelet_size
+        self.patch_size = patch_size
+
+
+        if optimizer_type == "AdamW":
+            self.optimizer_type = AdamW
+        elif optimizer_type == "Adam":
+            self.optimizer_type = Adam
+        else:
+            raise ValueError("optimizer_type must be either AdamW or Adam")

@@ -1,0 +1,12 @@
+﻿def get_lcs_inner(direct, a, i, j, lcs):          
+                if i < 0 or j < 0:  
+                        return  
+                  
+                if direct[i][j] == 0:  
+                        get_lcs_inner(direct, a, i - 1, j - 1, lcs)  
+                        lcs.append(a[i])  
+                                   
+                elif direct[i][j] == 1:  
+                        get_lcs_inner(direct, a, i - 1, j, lcs)  
+                else:  
+                        get_lcs_inner(direct, a, i, j - 1, lcs)

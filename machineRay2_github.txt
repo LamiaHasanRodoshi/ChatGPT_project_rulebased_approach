@@ -1,0 +1,4 @@
+﻿def get_aspect_ratio():
+  input_x = np.random.rand(1)*850
+  y_interp = np.interp(input_x, x, y)
+  return y_interp[0]
